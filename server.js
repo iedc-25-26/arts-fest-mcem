@@ -131,7 +131,15 @@ app.post('/validate-admission', (req, res) => {
     });
 });
 
-app.listen(port, () => {
-  console.log(`Auth server running at http://localhost:${port}`);
-  console.log("Server updated: Branch and Semester support enabled.");
+app.get('/', (req, res) => {
+  res.send("Arts Fest API Running");
 });
+
+if (process.argv[1] === fileURLToPath(import.meta.url)) {
+  app.listen(port, () => {
+    console.log(`Auth server running at http://localhost:${port}`);
+    console.log("Server updated: Branch and Semester support enabled.");
+  });
+}
+
+export default app;

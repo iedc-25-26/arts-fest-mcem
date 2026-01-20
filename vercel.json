@@ -1,0 +1,16 @@
+{
+    "rewrites": [
+        {
+            "source": "/login",
+            "destination": "/api/index.js"
+        },
+        {
+            "source": "/validate-admission",
+            "destination": "/api/index.js"
+        },
+        {
+            "source": "/(.*)",
+            "destination": "/index.html"
+        }
+    ]
+}

@@ -167,7 +167,7 @@ const RegistrationManagement = () => {
         // 2. Validate with Backend and Fetch Names
         let studentDetailsMap = {};
         try {
-            const response = await fetch('http://localhost:3001/validate-admission', {
+            const response = await fetch('/validate-admission', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ admissionNumbers: admissionNumbersToValidate })

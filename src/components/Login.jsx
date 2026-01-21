@@ -47,15 +47,17 @@ const Login = () => {
 
   return (
     <>
-      <section>
-        <div style={{
-          position: 'absolute',
-          top: '2%',
-          left: '2%', // Positioned at top left
-          width: '200px', // Smaller width for corner logo
-          zIndex: 10,
-          textAlign: 'left'
-        }}>
+      <section className="login-page-wrapper">
+        <div
+          className="login-logo"
+          style={{
+            position: 'absolute',
+            top: '2%',
+            left: '2%', // Positioned at top left
+            width: '200px', // Smaller width for corner logo
+            zIndex: 10,
+            textAlign: 'left'
+          }}>
           <img
             src={collegeLogo}
             alt="College Logo"
@@ -68,21 +70,23 @@ const Login = () => {
           />
         </div>
 
-        <h1 style={{
-          position: 'absolute',
-          top: '15%', // Original position, logo is now in corner so no conflict
-          left: '50%',
-          transform: 'translateX(-50%)',
-          fontFamily: "'Righteous', cursive",
-          fontSize: '3.5rem',
-          color: 'white',
-          textShadow: '0px 2px 4px rgba(0,0,0,0.2)',
-          textAlign: 'center',
-          width: '100%',
-          zIndex: 10,
-          margin: 0,
-          letterSpacing: '2px'
-        }}>
+        <h1
+          className="login-title"
+          style={{
+            position: 'absolute',
+            top: '15%', // Original position, logo is now in corner so no conflict
+            left: '50%',
+            transform: 'translateX(-50%)',
+            fontFamily: "'Righteous', cursive",
+            fontSize: '3.5rem',
+            color: 'white',
+            textShadow: '0px 2px 4px rgba(0,0,0,0.2)',
+            textAlign: 'center',
+            width: '100%',
+            zIndex: 10,
+            margin: 0,
+            letterSpacing: '2px'
+          }}>
           MCEM Arts Fest 2026
         </h1>
         <div className="auth">

@@ -136,8 +136,67 @@ body {
   transition: transform 0.2s ease;
 }
 
-.logout-btn:hover {
-  transform: scale(1.05);
-  background-color: #f0f0f0 !important;
-  /* Slight grey on hover for white button */
+/* Mobile & Tablet Responsiveness */
+@media (max-width: 768px) {
+  html {
+    font-size: 9px;
+    /* Slightly smaller base font */
+  }
+
+  .auth {
+    min-width: 90%;
+    width: 90%;
+    padding: 1.5rem;
+  }
+
+  .auth h1 {
+    font-size: 2.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  html {
+    font-size: 8px;
+  }
+
+  .auth {
+    min-width: 95%;
+    width: 95%;
+    top: 60%;
+    /* Push form down slightly on very small screens if needed */
+  }
+
+  /* Responsive classes for Login Page Components */
+  .login-page-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    position: relative;
+  }
+
+  .login-logo {
+    position: static !important;
+    /* Override absolute positioning */
+    transform: none !important;
+    margin: 0 auto 1rem auto !important;
+    text-align: center !important;
+    left: auto !important;
+    top: auto !important;
+    width: 60% !important;
+    /* Larger logo on mobile */
+    max-width: 200px;
+  }
+
+  .login-title {
+    position: static !important;
+    /* Override absolute positioning */
+    transform: none !important;
+    margin: 1rem 0 !important;
+    text-align: center !important;
+    top: auto !important;
+    left: auto !important;
+    font-size: 3rem !important;
+  }
 }

@@ -190,24 +190,24 @@ body {
   .login-logo {
     position: absolute !important;
     /* Back to corner */
-    top: 1rem !important;
-    /* Closer to corner */
-    left: 1rem !important;
+    top: 0.5rem !important;
+    /* Firmly top */
+    left: 0.5rem !important;
+    /* Firmly left */
     transform: none !important;
     margin: 0 !important;
     text-align: left !important;
-    width: 85% !important;
-    /* Maximum visibility */
-    max-width: 500px;
+    width: 90% !important;
+    /* Very Big */
+    max-width: none !important;
     z-index: 1000 !important;
-    /* Ensure it's on top */
   }
 
   .login-title {
     position: static !important;
     transform: none !important;
-    margin: 22rem 0 2rem 0 !important;
-    /* Huge margin to clear the logo */
+    margin: 25rem 0 2rem 0 !important;
+    /* Clear the big logo */
     text-align: center !important;
     top: auto !important;
     left: auto !important;

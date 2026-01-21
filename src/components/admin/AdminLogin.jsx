@@ -10,7 +10,7 @@ const AdminLogin = () => {
     const handleLogin = (e) => {
         e.preventDefault();
         // Hardcoded admin credentials as per plan
-        if (username === "user" && password === "mcem@123") {
+        if (username === "Admin" && password === "mcem@123") {
             localStorage.setItem("adminAuth", "true");
             navigate("/admin-panel/dashboard");
         } else {

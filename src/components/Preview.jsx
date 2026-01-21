@@ -48,7 +48,7 @@ const Preview = () => {
 
             await Promise.all(registrationPromises);
 
-            navigate("/thank-you", { state: { admissionNumber, studentName } });
+            navigate("/thank-you", { state: { admissionNumber, studentName }, replace: true });
         } catch (error) {
             console.error("Error adding document: ", error);
             alert(`Error submitting registration: ${error.message}`);

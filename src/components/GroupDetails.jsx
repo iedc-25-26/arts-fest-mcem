@@ -282,7 +282,8 @@ const GroupDetails = () => {
                     studentName,
                     selectedGroupPrograms,
                     groupMembers: finalGroupMembers
-                }
+                },
+                replace: true
             });
 
         } catch (firebaseError) {

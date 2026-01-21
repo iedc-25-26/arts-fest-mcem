@@ -40,6 +40,64 @@ const RegistrationManagement = () => {
         return () => unsubscribe();
     }, []);
 
+    // Auto-sync missing details
+    React.useEffect(() => {
+        if (registrations.length === 0) return;
+
+        const syncData = async () => {
+            // Find records with missing data
+            const missing = registrations.filter(r =>
+                (!r.branch || r.branch === "N/A" || !r.semester || r.semester === "N/A")
+            );
+
+            if (missing.length === 0) return;
+
+            const distinctAdms = [...new Set(missing.map(r => r.admissionNumber))].filter(Boolean);
+            if (distinctAdms.length === 0) return;
+
+            try {
+                const response = await fetch('/validate-admission', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ admissionNumbers: distinctAdms })
+                });
+                const data = await response.json();
+
+                if (data.success && data.studentDetails) {
+                    const { db } = await import("../../firebaseConfig");
+                    const { doc, updateDoc } = await import("firebase/firestore");
+
+                    const updates = [];
+                    for (const reg of missing) {
+                        const details = data.studentDetails[reg.admissionNumber];
+                        if (details) {
+                            const newBranch = details.branch || "N/A";
+                            const newSem = details.semester || "N/A";
+                            const newName = details.name || reg.name;
+
+                            // Prevent infinite loop: Only update if value actually changes
+                            if (newBranch !== (reg.branch || "N/A") || newSem !== (reg.semester || "N/A")) {
+                                updates.push(updateDoc(doc(db, "registrations", reg.regId), {
+                                    branch: newBranch,
+                                    semester: newSem,
+                                    name: newName
+                                }));
+                            }
+                        }
+                    }
+                    if (updates.length > 0) {
+                        await Promise.all(updates);
+                        console.log(`Auto-synced ${updates.length} registrations.`);
+                    }
+                }
+            } catch (error) {
+                console.error("Auto-sync error:", error);
+            }
+        };
+
+        syncData();
+    }, [registrations]);
+
     const [searchTerm, setSearchTerm] = useState("");
     const [filterCategory, setFilterCategory] = useState("All");
     const [filterProgram, setFilterProgram] = useState("All");
@@ -122,6 +180,8 @@ const RegistrationManagement = () => {
         setGroupMembers([]); // Edit mode for single row doesn't trigger group logic yet
         setShowModal(true);
     };
+
+
 
     const handleDelete = async (id) => {
         if (window.confirm("Are you sure you want to delete this registration?")) {
@@ -425,7 +485,7 @@ const RegistrationManagement = () => {
         doc.setFontSize(11);
         doc.text(`Generated: ${new Date().toLocaleString()}`, 14, 30);
 
-        const tableColumn = ["SL.NO", "Admission No", "Name", "Program", "Branch/Sem", "Type", "Status"];
+        const tableColumn = ["SL.NO", "Admission No", "Name", "Program", "Branch", "Semester", "Type", "Status"];
         const tableRows = [];
 
         filteredRegs.forEach((reg, index) => {
@@ -434,7 +494,8 @@ const RegistrationManagement = () => {
                 reg.admissionNumber,
                 reg.name + (reg.role === "Team Leader" ? " (L)" : ""),
                 reg.program,
-                `${reg.branch || '-'}/${reg.semester || '-'}`,
+                reg.branch || '-',
+                reg.semester || '-',
                 reg.category,
                 reg.status
             ];
@@ -487,6 +548,7 @@ const RegistrationManagement = () => {
                 <button className="admin-btn admin-btn-primary" onClick={handleAddRegistration} style={{ marginRight: '1rem' }}>
                     + Add New
                 </button>
+
                 <div style={{ display: 'flex', gap: '1rem' }}>
                     <select
                         value={filterCategory}
@@ -529,7 +591,8 @@ const RegistrationManagement = () => {
                             <th>Admission Number</th>
                             <th>Name</th>
                             <th>Program</th>
-                            <th>Branch/Sem</th>
+                            <th>Branch</th>
+                            <th>Semester</th>
                             <th>Date</th>
                             <th>Type</th>
                             <th>Status</th>
@@ -546,7 +609,8 @@ const RegistrationManagement = () => {
                                     {reg.role === "Team Leader" && <span style={{ fontSize: '0.8em', marginLeft: '5px', color: 'green' }}>(Leader)</span>}
                                 </td>
                                 <td>{reg.program}</td>
-                                <td>{reg.branch || "N/A"} / {reg.semester || "N/A"}</td>
+                                <td>{reg.branch || "N/A"}</td>
+                                <td>{reg.semester || "N/A"}</td>
                                 <td>{reg.date}</td>
                                 <td>{reg.category}</td>
                                 <td>

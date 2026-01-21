@@ -188,21 +188,26 @@ body {
   }
 
   .login-logo {
-    position: static !important;
+    position: absolute !important;
+    /* Back to corner */
+    top: 1rem !important;
+    /* Closer to corner */
+    left: 1rem !important;
     transform: none !important;
-    margin: 0 auto 1rem auto !important;
-    text-align: center !important;
-    left: auto !important;
-    top: auto !important;
-    width: 60% !important;
-    max-width: 200px;
+    margin: 0 !important;
+    text-align: left !important;
+    width: 85% !important;
+    /* Maximum visibility */
+    max-width: 500px;
+    z-index: 1000 !important;
+    /* Ensure it's on top */
   }
 
   .login-title {
     position: static !important;
     transform: none !important;
-    margin: 1rem 0 2rem 0 !important;
-    /* Add bottom margin */
+    margin: 22rem 0 2rem 0 !important;
+    /* Huge margin to clear the logo */
     text-align: center !important;
     top: auto !important;
     left: auto !important;

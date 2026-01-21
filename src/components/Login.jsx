@@ -64,8 +64,8 @@ const Login = () => {
             style={{
               width: '100%',
               height: 'auto',
-              display: 'block',
-              mixBlendMode: 'screen' // Black background becomes transparent
+              display: 'block'
+              // mixBlendMode removed to ensure visibility
             }}
           />
         </div>

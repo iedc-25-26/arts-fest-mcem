@@ -43,25 +43,23 @@ function App() {
         </div>
 
         {/* GLOBAL WATERMARK (Overlay Footer Style) */}
+        {/* GLOBAL WATERMARK (Overlay Footer Style) */}
         <div style={{
-          position: 'absolute',
-          bottom: 0,
+          position: 'fixed', // Fixed to stay at viewport bottom, effectively a watermark
+          bottom: '5px',
           left: 0,
           width: '100%',
-          padding: '1rem',
-          opacity: 0.8,
-          fontSize: '1rem',
-          color: '#000',
-          fontWeight: '600',
-          fontFamily: 'sans-serif',
           textAlign: 'center',
-          lineHeight: '1.4',
+          fontSize: '0.7rem', // "Really small"
+          color: 'rgba(255, 255, 255, 0.5)', // "White" but subtle
+          fontWeight: '300', // "Thin"
+          fontFamily: 'sans-serif',
           userSelect: 'none',
-          pointerEvents: 'none',
-          zIndex: 10
+          pointerEvents: 'none', // Click-through
+          zIndex: 9999, // On top of everything
+          textShadow: '0px 1px 2px rgba(0,0,0,0.5)' // Ensure legibility on light backgrounds
         }}>
-          Powered by <br />
-          CT 2023-26
+          Powered by CT 2023-26
         </div>
       </div>
     </BrowserRouter>

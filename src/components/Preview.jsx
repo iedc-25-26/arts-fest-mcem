@@ -66,7 +66,7 @@ const Preview = () => {
     };
 
     return (
-        <section style={{ position: "relative", minHeight: "100vh", background: "linear-gradient(160deg, rgba(0, 147, 233, 1) 0%, rgba(128, 208, 199, 1) 100%)", display: "flex", justifyContent: "center", alignItems: "center" }}>
+        <section style={{ flex: 1, position: "relative", background: "linear-gradient(160deg, rgba(0, 147, 233, 1) 0%, rgba(128, 208, 199, 1) 100%)", display: "flex", justifyContent: "center", alignItems: "center" }}>
             {/* Profile Header */}
             <ProfileHeader studentName={studentName} admissionNumber={admissionNumber} />
             <div className="auth" style={{ minWidth: "35rem", textAlign: "center" }}>

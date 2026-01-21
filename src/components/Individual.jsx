@@ -158,7 +158,7 @@ const Individual = () => {
 
     return (
         <section style={{
-            minHeight: "100vh",
+            flex: 1, // Allow growing
             width: "100%",
             background: "linear-gradient(160deg, rgba(0, 147, 233, 1) 0%, rgba(128, 208, 199, 1) 100%)",
             padding: "2rem",

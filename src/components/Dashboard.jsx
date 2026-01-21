@@ -141,7 +141,12 @@ const Dashboard = () => {
     return (
         <>
             <InstructionsModal />
-            <section style={{ minHeight: "100vh", padding: "2rem" }}>
+            <section style={{
+                flex: 1, // Allow growing to fill space defined by App's flex container
+                display: 'flex',
+                flexDirection: 'column',
+                padding: "2rem"
+            }}>
                 <div style={{
                     position: "absolute",
                     top: "2rem",

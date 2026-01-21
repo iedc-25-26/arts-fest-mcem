@@ -18,7 +18,8 @@ body {
   background: -webkit-linear-gradient(160deg, rgba(0, 147, 233, 1) 0%, rgba(128, 208, 199, 1) 100%);
   background: linear-gradient(160deg, rgba(0, 147, 233, 1) 0%, rgba(128, 208, 199, 1) 100%);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#0093e9", endColorstr="#80d0c7", GradientType=1);
-  height: 100vh;
+  min-height: 100vh;
+  /* Allow growing */
   width: 100%;
   font-family: "Poppins", sans-serif;
 }
@@ -176,16 +177,20 @@ body {
   }
 
   /* Responsive classes for Login Page Components */
+  /* Responsive classes for Login Page Components */
   .login-page-wrapper {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    /* Align to top */
-    min-height: 100vh;
+    min-height: auto;
+    /* Let it grow naturally */
+    flex-grow: 1;
+    /* Take up available space but don't force overflow */
     padding: 2rem 0;
     position: relative;
-    overflow-y: auto;
+    overflow: visible;
+    /* Remove internal scroll to let body scroll */
   }
 
   .login-logo {

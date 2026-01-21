@@ -17,8 +17,13 @@ import RegistrationManagement from "./components/admin/RegistrationManagement";
 function App() {
   return (
     <BrowserRouter>
-      <div style={{ position: 'relative', minHeight: '100vh' }}>
-        <div>
+      <div style={{
+        display: 'flex',
+        flexDirection: 'column',
+        minHeight: '100vh',
+        position: 'relative'
+      }}>
+        <div style={{ width: '100%' }}>
           <Routes>
             <Route path="/" element={<Login />} />
 
@@ -42,24 +47,24 @@ function App() {
           </Routes>
         </div>
 
-        {/* GLOBAL WATERMARK (Overlay Footer Style) */}
-        {/* GLOBAL WATERMARK (Overlay Footer Style) */}
+        {/* GLOBAL WATERMARK */}
         <div style={{
-          position: 'fixed', // Fixed to stay at viewport bottom, effectively a watermark
-          bottom: '5px',
-          left: 0,
-          width: '100%',
-          textAlign: 'center',
-          fontSize: '0.7rem', // "Really small"
-          color: 'rgba(255, 255, 255, 0.5)', // "White" but subtle
-          fontWeight: '300', // "Thin"
+          padding: '1rem',
+          opacity: 0.8,
+          fontSize: '1rem',
+          color: '#000',
+          fontWeight: '600',
           fontFamily: 'sans-serif',
+          textAlign: 'center',
+          lineHeight: '1.4',
           userSelect: 'none',
-          pointerEvents: 'none', // Click-through
-          zIndex: 9999, // On top of everything
-          textShadow: '0px 1px 2px rgba(0,0,0,0.5)' // Ensure legibility on light backgrounds
+          pointerEvents: 'none',
+          zIndex: 10,
+          marginTop: '3rem', // Fixed spacing from content
+          marginBottom: '2rem' // Bottom spacer
         }}>
-          Powered by CT 2023-26
+          Powered by <br />
+          CT 2023-26
         </div>
       </div>
     </BrowserRouter>

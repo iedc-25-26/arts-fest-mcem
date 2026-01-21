@@ -23,7 +23,7 @@ function App() {
         minHeight: '100vh',
         position: 'relative'
       }}>
-        <div style={{ width: '100%' }}>
+        <div className="main-content-wrapper">
           <Routes>
             <Route path="/" element={<Login />} />
 
@@ -48,21 +48,7 @@ function App() {
         </div>
 
         {/* GLOBAL WATERMARK */}
-        <div style={{
-          padding: '1rem',
-          opacity: 0.8,
-          fontSize: '1rem',
-          color: '#000',
-          fontWeight: '600',
-          fontFamily: 'sans-serif',
-          textAlign: 'center',
-          lineHeight: '1.4',
-          userSelect: 'none',
-          pointerEvents: 'none',
-          zIndex: 10,
-          marginTop: '3rem', // Fixed spacing from content
-          marginBottom: '2rem' // Bottom spacer
-        }}>
+        <div className="footer-watermark">
           Powered by <br />
           CT 2023-26
         </div>

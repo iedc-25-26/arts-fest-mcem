@@ -215,6 +215,18 @@ body {
     left: auto !important;
     font-size: 3rem !important;
   }
+
+  /* Responsive Footer overrides for Mobile */
+  .main-content-wrapper {
+    flex-grow: 0 !important;
+    /* Don't expand on mobile, stay close to content */
+  }
+
+  .footer-watermark {
+    margin-top: 3rem !important;
+    /* Close to content on mobile */
+    position: static !important;
+  }
 }
 
 /* =========================================
@@ -342,4 +354,28 @@ body {
   .program-list-item {
     font-size: 1.3rem;
   }
+}
+
+/* Global Footer Styles (Desktop Default) */
+.main-content-wrapper {
+  flex-grow: 1;
+  /* Push footer to bottom on desktop */
+  width: 100%;
+}
+
+.footer-watermark {
+  padding: 1rem;
+  opacity: 0.8;
+  font-size: 1rem;
+  color: #000;
+  font-weight: 600;
+  font-family: sans-serif;
+  text-align: center;
+  line-height: 1.4;
+  user-select: none;
+  pointer-events: none;
+  z-index: 10;
+  margin-top: auto;
+  /* Sticky bottom on desktop */
+  margin-bottom: 0.5rem;
 }

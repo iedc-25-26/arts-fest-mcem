@@ -86,13 +86,7 @@ const Individual = () => {
         const isRegistered = alreadyRegistered.includes(program);
 
         return (
-            <li key={program} style={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-                padding: "0.8rem 0",
-                borderBottom: "1px solid #eee",
-                fontSize: "1.4rem",
+            <li key={program} className="program-list-item" style={{
                 opacity: isRegistered ? 0.6 : 1
             }}>
                 <span style={{ textDecoration: isRegistered ? "line-through" : "none" }}>{program} {isRegistered && "(Registered)"}</span>
@@ -176,16 +170,7 @@ const Individual = () => {
             {/* Profile Header */}
             <ProfileHeader studentName={studentName} admissionNumber={admissionNumber} />
 
-            <div style={{
-                backgroundColor: "#ffffff",
-                padding: "3rem",
-                borderRadius: "1rem",
-                width: "100%",
-                maxWidth: "1000px",
-                minHeight: "80vh",
-                boxShadow: "0 10px 30px rgba(0,0,0,0.1)",
-                margin: "4rem auto"
-            }}>
+            <div className="individual-details-card">
                 <h1 style={{
                     fontSize: "3.5rem",
                     marginBottom: "2rem",
@@ -211,11 +196,7 @@ const Individual = () => {
                     Selected Programs: {selectedPrograms.length} / 4
                 </div>
 
-                <div style={{
-                    display: "grid",
-                    gridTemplateColumns: "repeat(auto-fit, minmax(350px, 1fr))",
-                    gap: "4rem"
-                }}>
+                <div className="individual-programs-grid">
                     {/* Render ONSTAGE and OFFSTAGE sections */}
                     {/* We can split them or render all. The Arts code split them specifically. */}
                     {/* Let's render two columns roughly corresponding to Onstage and Offstage if possible, or just two generic columns distributing the data. */}

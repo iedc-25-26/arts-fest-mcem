@@ -290,3 +290,54 @@ body {
     margin-bottom: 0.2rem;
   }
 }
+
+/* =========================================
+   Individual Events Page Styles
+   ========================================= */
+
+/* Base Styles (Desktop) */
+.individual-details-card {
+  background-color: #ffffff;
+  padding: 3rem;
+  border-radius: 1rem;
+  width: 100%;
+  max-width: 1000px;
+  min-height: 80vh;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  margin: 4rem auto;
+}
+
+.individual-programs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 4rem;
+}
+
+.program-list-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.8rem 0;
+  border-bottom: 1px solid #eee;
+  font-size: 1.4rem;
+}
+
+/* Mobile Overrides */
+@media (max-width: 480px) {
+  .individual-details-card {
+    padding: 1.5rem;
+    margin: 2rem auto;
+    width: 95%;
+  }
+
+  .individual-programs-grid {
+    grid-template-columns: 1fr;
+    /* Stack vertically single column */
+    gap: 2rem;
+  }
+
+  /* Make list items more compact or readable if needed */
+  .program-list-item {
+    font-size: 1.3rem;
+  }
+}

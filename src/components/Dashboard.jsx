@@ -195,7 +195,7 @@ const Dashboard = () => {
                     </div>
                 </div>
 
-                <div className="auth" style={{ textAlign: "center", marginTop: "5rem" }}>
+                <div className="auth dashboard-auth" style={{ textAlign: "center", marginTop: "5rem" }}>
                     <h1>ART FEST 2K26</h1>
                     <div style={{ margin: "3rem 0", fontSize: "1.5rem", display: 'flex', gap: '2rem', justifyContent: 'center' }}>
                         <button

@@ -170,6 +170,11 @@ body {
     width: 95%;
   }
 
+  /* Specific override for Dashboard to sit lower */
+  .auth.dashboard-auth {
+    margin-top: 22rem !important;
+  }
+
   /* Responsive classes for Login Page Components */
   .login-page-wrapper {
     display: flex;

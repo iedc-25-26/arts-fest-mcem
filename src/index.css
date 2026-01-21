@@ -160,10 +160,17 @@ body {
   }
 
   .auth {
+    position: static !important;
+    /* Switch to natural flow stacking */
+    transform: none !important;
+    top: auto !important;
+    right: auto !important;
+    left: auto !important;
+
     min-width: 95%;
     width: 95%;
-    top: 60%;
-    /* Push form down slightly on very small screens if needed */
+    margin-top: 2rem !important;
+    /* Add spacing below title */
   }
 
   /* Responsive classes for Login Page Components */
@@ -172,28 +179,30 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 100vh;
+    min-height: 100vh;
+    /* Allow growing if content is tall */
+    padding: 2rem 0;
     position: relative;
+    overflow-y: auto;
+    /* Allow scrolling if screen is short */
   }
 
   .login-logo {
     position: static !important;
-    /* Override absolute positioning */
     transform: none !important;
     margin: 0 auto 1rem auto !important;
     text-align: center !important;
     left: auto !important;
     top: auto !important;
     width: 60% !important;
-    /* Larger logo on mobile */
     max-width: 200px;
   }
 
   .login-title {
     position: static !important;
-    /* Override absolute positioning */
     transform: none !important;
-    margin: 1rem 0 !important;
+    margin: 1rem 0 2rem 0 !important;
+    /* Add bottom margin */
     text-align: center !important;
     top: auto !important;
     left: auto !important;

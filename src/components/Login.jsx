@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import collegeLogo from "../assets/logo.svg"; // Import the local logo
 
 const Login = () => {
   const [admissionNumber, setAdmissionNumber] = useState("");
@@ -9,6 +10,7 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    // ... (handleSubmit logic remains exactly the same, no changes needed here but tool requires context)
     setMessage("");
     setIsSuccess(false);
 
@@ -46,9 +48,29 @@ const Login = () => {
   return (
     <>
       <section>
+        <div style={{
+          position: 'absolute',
+          top: '2%',
+          left: '2%', // Positioned at top left
+          width: '200px', // Smaller width for corner logo
+          zIndex: 10,
+          textAlign: 'left'
+        }}>
+          <img
+            src={collegeLogo}
+            alt="College Logo"
+            style={{
+              width: '100%',
+              height: 'auto',
+              display: 'block',
+              mixBlendMode: 'screen' // Black background becomes transparent
+            }}
+          />
+        </div>
+
         <h1 style={{
           position: 'absolute',
-          top: '15%',
+          top: '15%', // Original position, logo is now in corner so no conflict
           left: '50%',
           transform: 'translateX(-50%)',
           fontFamily: "'Righteous', cursive",

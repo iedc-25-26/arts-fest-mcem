@@ -17,27 +17,53 @@ import RegistrationManagement from "./components/admin/RegistrationManagement";
 function App() {
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Login />} />
+      <div style={{ position: 'relative', minHeight: '100vh' }}>
+        <div>
+          <Routes>
+            <Route path="/" element={<Login />} />
 
-        {/* Protected Routes */}
-        <Route element={<ProtectedRoute />}>
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/individual" element={<Individual />} />
-          <Route path="/preview" element={<Preview />} />
-          <Route path="/group" element={<Group />} />
-          <Route path="/group-details" element={<GroupDetails />} />
-          <Route path="/thank-you" element={<ThankYou />} />
-        </Route>
+            {/* Protected Routes */}
+            <Route element={<ProtectedRoute />}>
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/individual" element={<Individual />} />
+              <Route path="/preview" element={<Preview />} />
+              <Route path="/group" element={<Group />} />
+              <Route path="/group-details" element={<GroupDetails />} />
+              <Route path="/thank-you" element={<ThankYou />} />
+            </Route>
 
-        {/* Admin Routes */}
-        <Route path="/admin" element={<AdminLogin />} />
-        <Route path="/admin-panel" element={<AdminLayout />}>
-          <Route path="dashboard" element={<AdminDashboard />} />
-          <Route path="programs" element={<ProgramManagement />} />
-          <Route path="registrations" element={<RegistrationManagement />} />
-        </Route>
-      </Routes>
+            {/* Admin Routes */}
+            <Route path="/admin" element={<AdminLogin />} />
+            <Route path="/admin-panel" element={<AdminLayout />}>
+              <Route path="dashboard" element={<AdminDashboard />} />
+              <Route path="programs" element={<ProgramManagement />} />
+              <Route path="registrations" element={<RegistrationManagement />} />
+            </Route>
+          </Routes>
+        </div>
+
+        {/* GLOBAL WATERMARK (Overlay Footer Style) */}
+        <div style={{
+          position: 'absolute',
+          bottom: 0,
+          left: 0,
+          width: '100%',
+          padding: '1rem',
+          opacity: 0.8,
+          fontSize: '1rem',
+          color: '#000',
+          fontWeight: '600',
+          fontFamily: 'sans-serif',
+          textAlign: 'center',
+          lineHeight: '1.4',
+          userSelect: 'none',
+          pointerEvents: 'none',
+          zIndex: 10
+        }}>
+          Powered by <br />
+          CT 2023-26
+        </div>
+      </div>
     </BrowserRouter>
   );
 }

@@ -152,7 +152,6 @@ const RegistrationManagement = () => {
     };
 
     const handleEdit = (reg) => {
-        setEditingId(reg.regId);
         const progInfo = PROGRAM_DATA.find(p => p.name === reg.program);
         let category = "Individual-Onstage";
         if (progInfo) {
@@ -164,12 +163,48 @@ const RegistrationManagement = () => {
             category = "Individual-Onstage";
         }
 
-        // Note: Formatting for edit is tricky if we move to complex group storage.
-        // For now, "Edit" on a Team Leader could potentially pull up the team, 
-        // but simplification: Admin "Edit" primarily fixes typos in the simplified row.
-        // We won't support full Team structure editing in this simple modal yet, 
-        // as re-linking members is complex. 
-        // Edit will behave as "Edit this single entry".
+        if (category === "Group") {
+            // Fetch all members of this group
+            // We use teamLeaderId and program to identify the group
+            const members = registrations.filter(r =>
+                r.teamLeaderId === reg.teamLeaderId &&
+                r.program === reg.program
+            );
+
+            // Sort so Team Leader is first
+            const sortedMembers = [...members].sort((a, b) => {
+                if (a.role === "Team Leader") return -1;
+                if (b.role === "Team Leader") return 1;
+                return 0; // Keep original order for members
+            });
+
+            // Populate groupMembers with existing data + regId for updates
+            // Also ensure we fill up to the program limit if fewer members are somehow registered? 
+            // For now, let's just edit existing. Adding new members to existing group is harder UI wise.
+            // Actually, let's respect program size limit to allow potential expansion.
+
+            const limits = getProgramLimits(reg.program);
+            const size = limits.size;
+
+            // Map existing
+            const mappedMembers = sortedMembers.map(m => ({
+                admissionNumber: m.admissionNumber,
+                name: m.name,
+                regId: m.regId, // Critical for update
+                role: m.role
+            }));
+
+            // If we want to allow adding members up to limit (OPTIONAL, but good UX)
+            // while (mappedMembers.length < size) {
+            //     mappedMembers.push({ admissionNumber: "", name: "" });
+            // } 
+
+            setGroupMembers(mappedMembers);
+            setEditingId(reg.teamLeaderId); // Use Leader ID as main key, or just truthy
+        } else {
+            setGroupMembers([]);
+            setEditingId(reg.regId);
+        }
 
         setNewRegData({
             name: reg.name,
@@ -177,7 +212,7 @@ const RegistrationManagement = () => {
             category: category,
             program: reg.program
         });
-        setGroupMembers([]); // Edit mode for single row doesn't trigger group logic yet
+
         setShowModal(true);
     };
 
@@ -202,7 +237,7 @@ const RegistrationManagement = () => {
         // 1. Prepare Admission Numbers for Validation
         let admissionNumbersToValidate = [];
 
-        if (newRegData.category === "Group" && !editingId) {
+        if (newRegData.category === "Group") {
             if (!newRegData.program) {
                 alert("Please select a program.");
                 return;
@@ -286,7 +321,7 @@ const RegistrationManagement = () => {
         const mainAdmNo = admissionNumbersToValidate[0];
         const studentName = studentDetailsMap[mainAdmNo]?.name || "Unknown Student";
 
-        if (newRegData.category === "Group" && !editingId) {
+        if (newRegData.category === "Group") {
             confirmMessage = `Confirm Group Registration?\n\n` +
                 `Program: ${newRegData.program}\n` +
                 `Team Leader: ${studentName} (${mainAdmNo})\n` +
@@ -311,9 +346,13 @@ const RegistrationManagement = () => {
             const { collection, addDoc, doc, updateDoc } = await import("firebase/firestore");
             const now = new Date();
 
-            if (newRegData.category === "Group" && !editingId) {
-                // BATCH SAVE GROUP
-                const leaderId = groupMembers[0].admissionNumber;
+            if (newRegData.category === "Group") {
+                // HANDLE GROUP SAVE (BOTH NEW AND EDIT)
+                const leaderId = groupMembers[0].admissionNumber; // First is always leader
+
+                // We need to handle updates differently than creates
+                // For updates, we iterate and updateDoc. For new, addDoc.
+                // Since this handles both, we check if member has regId.
 
                 const batchPromises = groupMembers.map((member, index) => {
                     const admNo = member.admissionNumber.trim();
@@ -324,7 +363,7 @@ const RegistrationManagement = () => {
                         throw new Error(`Missing details for ${admNo}`);
                     }
 
-                    return addDoc(collection(db, "registrations"), {
+                    const docData = {
                         name: details.name,
                         admissionNumber: admNo,
                         program: newRegData.program,
@@ -333,11 +372,20 @@ const RegistrationManagement = () => {
                         category: "Group",
                         role: index === 0 ? "Team Leader" : "Member",
                         teamLeaderId: leaderId,
-                        date: now.toLocaleDateString(),
-                        time: now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-                        status: "Registered",
-                        timestamp: now
-                    });
+                        // Preserve original timestamps if editing, else new
+                        ...(member.regId ? {} : {
+                            date: now.toLocaleDateString(),
+                            time: now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+                            status: "Registered",
+                            timestamp: now
+                        })
+                    };
+
+                    if (member.regId) {
+                        return updateDoc(doc(db, "registrations", member.regId), docData);
+                    } else {
+                        return addDoc(collection(db, "registrations"), docData);
+                    }
                 });
 
                 await Promise.all(batchPromises);
@@ -639,19 +687,6 @@ const RegistrationManagement = () => {
             </div>
             <div style={{ marginTop: '2rem', textAlign: 'right' }}>
                 <button
-                    className="admin-btn admin-btn-secondary"
-                    onClick={() => downloadCSV(filteredRegs, 'registrations.csv')}
-                >
-                    Download List CSV
-                </button>
-                <button
-                    className="admin-btn admin-btn-primary"
-                    style={{ marginLeft: '1rem' }}
-                    onClick={downloadPDF}
-                >
-                    Download List PDF
-                </button>
-                <button
                     className="admin-btn"
                     style={{ marginLeft: '1rem', background: 'none', border: '1px solid #ccc' }}
                     onClick={() => window.print()}
@@ -749,7 +784,7 @@ const RegistrationManagement = () => {
                             </select>
 
                             {/* DYNAMIC FORM RENDERING */}
-                            {newRegData.category === "Group" && !editingId ? (
+                            {newRegData.category === "Group" ? (
                                 <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                                     {groupMembers.map((member, index) => (
                                         <div key={index} style={{ border: '1px solid #eee', padding: '1rem', borderRadius: '0.5rem', backgroundColor: '#f9f9f9' }}>
@@ -768,7 +803,7 @@ const RegistrationManagement = () => {
                                             </div>
                                         </div>
                                     ))}
-                                    {newRegData.program && groupMembers.length === 0 && <p style={{ color: 'red' }}>Error: No members limit found for this program.</p>}
+                                    {newRegData.program && groupMembers.length === 0 && !editingId && <p style={{ color: 'red' }}>Error: No members limit found for this program.</p>}
                                 </div>
                             ) : (
                                 // INDIVIDUAL OR EDIT MODE

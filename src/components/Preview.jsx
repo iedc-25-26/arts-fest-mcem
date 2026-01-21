@@ -24,6 +24,24 @@ const Preview = () => {
                 return;
             }
 
+            // Check for existing registrations for these specific programs
+            const { query, where, getDocs } = await import("firebase/firestore");
+            const registrationsRef = collection(db, "registrations");
+
+            for (const program of selectedPrograms) {
+                const q = query(
+                    registrationsRef,
+                    where("admissionNumber", "==", admissionNumber),
+                    where("program", "==", program)
+                );
+                const snapshot = await getDocs(q);
+                if (!snapshot.empty) {
+                    alert(`You are already registered for "${program}".`);
+                    setIsSubmitting(false);
+                    return;
+                }
+            }
+
             const registrationPromises = selectedPrograms.map(program => {
                 return addDoc(collection(db, "registrations"), {
                     name: studentName,

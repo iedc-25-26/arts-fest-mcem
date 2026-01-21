@@ -8,7 +8,9 @@ const ProtectedRoute = () => {
         return <Navigate to="/" replace />;
     }
 
-    return <Outlet />;
+    return (
+        <Outlet />
+    );
 };
 
 export default ProtectedRoute;

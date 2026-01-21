@@ -23,7 +23,11 @@ const Individual = () => {
                 const { db } = await import("../firebaseConfig");
                 const { collection, query, where, getDocs } = await import("firebase/firestore");
 
-                const q = query(collection(db, "registrations"), where("admissionNumber", "==", admissionNumber));
+                const q = query(
+                    collection(db, "registrations"),
+                    where("admissionNumber", "==", admissionNumber)
+                );
+
                 const querySnapshot = await getDocs(q);
 
                 const registeredPrograms = [];
@@ -31,9 +35,12 @@ const Individual = () => {
 
                 querySnapshot.docs.forEach(doc => {
                     const data = doc.data();
-                    if (data.category && data.category.startsWith("Individual")) {
-                        count++;
-                        if (data.program) registeredPrograms.push(data.program);
+                    // Handle generic 'Individual' or specific 'Individual-Onstage' etc.
+                    if (data.category && (data.category === "Individual" || data.category.startsWith("Individual"))) {
+                        if (data.program) {
+                            registeredPrograms.push(data.program);
+                            count++;
+                        }
                     }
                 });
 

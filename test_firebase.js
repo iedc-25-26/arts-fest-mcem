@@ -3,7 +3,7 @@ import { getFirestore, collection, addDoc } from "firebase/firestore";
 
 // Config from src/firebaseConfig.js (Manual copy to ensure isolation)
 const firebaseConfig = {
-    apiKey: "AIzaSyDJ8Ye_iYK8HpP68zZLSEms2U8u2g4mKf4",
+    apiKey: "   ",
     authDomain: "artsfest-9af94.firebaseapp.com",
     projectId: "artsfest-9af94",
     storageBucket: "artsfest-9af94.firebasestorage.app",

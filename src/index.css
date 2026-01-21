@@ -169,8 +169,8 @@ body {
 
     min-width: 95%;
     width: 95%;
-    margin-top: 2rem !important;
-    /* Add spacing below title */
+    margin-top: 10rem !important;
+    /* Push content down significantly */
   }
 
   /* Responsive classes for Login Page Components */

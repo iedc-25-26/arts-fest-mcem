@@ -315,16 +315,7 @@ const GroupDetails = () => {
             {/* Profile Header */}
             <ProfileHeader studentName={studentName} admissionNumber={admissionNumber} />
 
-            <div style={{
-                backgroundColor: "#ffffff",
-                padding: "3rem",
-                borderRadius: "1rem",
-                width: "100%",
-                maxWidth: "1000px",
-                minHeight: "80vh",
-                boxShadow: "0 10px 30px rgba(0,0,0,0.1)",
-                margin: "4rem auto"
-            }}>
+            <div className="group-details-card">
                 <h1 style={{
                     fontSize: "3.5rem",
                     marginBottom: "3rem",
@@ -337,20 +328,11 @@ const GroupDetails = () => {
                     GROUP MEMBERS DETAILS
                 </h1>
 
-                <div style={{
-                    display: "grid",
-                    gridTemplateColumns: "repeat(auto-fit, minmax(400px, 1fr))",
-                    gap: "4rem"
-                }}>
+                <div className="group-programs-grid">
                     {selectedGroupPrograms.map(program => {
                         const { size } = getProgramLimits(program);
                         return (
-                            <div key={program} style={{
-                                backgroundColor: "#f9fcff",
-                                padding: "2rem",
-                                borderRadius: "1rem",
-                                border: "1px solid #e0eefd"
-                            }}>
+                            <div key={program} className="group-program-card">
                                 <h3 style={{ fontSize: "2rem", color: "#0093E9", marginBottom: "0.5rem", borderBottom: "2px solid #0093E9", paddingBottom: "0.5rem" }}>
                                     {program}
                                 </h3>
@@ -360,8 +342,8 @@ const GroupDetails = () => {
 
                                 <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
                                     {groupMembers[program].map((member, index) => (
-                                        <div key={index} style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
-                                            <span style={{ fontSize: "1.4rem", fontWeight: "bold", color: "#666", width: "12rem" }}>
+                                        <div key={index} className="group-member-row">
+                                            <span className="group-member-label">
                                                 {index === 0 ? "Team Leader:" : `Member ${index + 1}:`}
                                             </span>
                                             <input
@@ -380,7 +362,8 @@ const GroupDetails = () => {
                                                     outline: "none",
                                                     backgroundColor: index === 0 ? "#e9ecef" : "white", // Gray out read-only
                                                     cursor: index === 0 ? "not-allowed" : "text",
-                                                    color: index === 0 ? "#6c757d" : "inherit"
+                                                    color: index === 0 ? "#6c757d" : "inherit",
+                                                    width: "100%" // Ensure input takes full width in column mode
                                                 }}
                                             />
                                         </div>

@@ -200,3 +200,79 @@ body {
     font-size: 3rem !important;
   }
 }
+
+/* =========================================
+   Group Details Page Styles
+   ========================================= */
+
+/* Base Styles (Desktop) */
+.group-details-card {
+  background-color: #ffffff;
+  padding: 3rem;
+  border-radius: 1rem;
+  width: 100%;
+  max-width: 1000px;
+  min-height: 80vh;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  margin: 4rem auto;
+}
+
+.group-programs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 4rem;
+}
+
+.group-program-card {
+  background-color: #f9fcff;
+  padding: 2rem;
+  border-radius: 1rem;
+  border: 1px solid #e0eefd;
+}
+
+.group-member-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.group-member-label {
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: #666;
+  width: 12rem;
+  flex-shrink: 0;
+  /* Prevent label from shrinking */
+}
+
+/* Mobile Overrides */
+@media (max-width: 480px) {
+  .group-details-card {
+    padding: 1.5rem;
+    margin: 2rem auto;
+    width: 95%;
+    /* Use more width on mobile */
+  }
+
+  .group-programs-grid {
+    grid-template-columns: 1fr;
+    /* Stack vertically, 1 column */
+    gap: 2rem;
+  }
+
+  .group-program-card {
+    padding: 1.5rem;
+  }
+
+  .group-member-row {
+    flex-direction: column;
+    /* Stack label on top of input */
+    align-items: stretch;
+    gap: 0.5rem;
+  }
+
+  .group-member-label {
+    width: 100%;
+    margin-bottom: 0.2rem;
+  }
+}

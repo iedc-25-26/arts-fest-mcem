@@ -215,7 +215,7 @@ const Dashboard = () => {
                     {/* User Registrations View */}
                     <div style={{
                         marginTop: "4rem",
-                        textAlign: "left",
+                        textAlign: "center", // Centered text
                         backgroundColor: "rgba(255,255,255,0.9)",
                         padding: "2rem",
                         borderRadius: "1rem",
@@ -230,7 +230,7 @@ const Dashboard = () => {
                         ) : (
                             <table style={{ width: "100%", borderCollapse: "collapse", marginTop: "1rem" }}>
                                 <thead>
-                                    <tr style={{ backgroundColor: "#f0f0f0", textAlign: "left" }}>
+                                    <tr style={{ backgroundColor: "#f0f0f0", textAlign: "center" }}> {/* Center headers */}
                                         <th style={{ padding: "1rem" }}>Program</th>
                                         <th style={{ padding: "1rem" }}>Category</th>
                                         <th style={{ padding: "1rem" }}>Status</th>
@@ -238,7 +238,7 @@ const Dashboard = () => {
                                 </thead>
                                 <tbody>
                                     {userRegistrations.map((reg) => (
-                                        <tr key={reg.id} style={{ borderBottom: "1px solid #eee" }}>
+                                        <tr key={reg.id} style={{ borderBottom: "1px solid #eee", textAlign: "center" }}>
                                             <td style={{ padding: "1rem", fontSize: "1.2rem" }}>{reg.program}</td>
                                             <td style={{ padding: "1rem", fontSize: "1.2rem" }}>{reg.category}</td>
                                             <td style={{ padding: "1rem" }}>

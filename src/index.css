@@ -169,8 +169,8 @@ body {
 
     min-width: 95%;
     width: 95%;
-    margin-top: 10rem !important;
-    /* Push content down significantly */
+    margin-top: 22rem !important;
+    /* Push content down further */
   }
 
   /* Responsive classes for Login Page Components */

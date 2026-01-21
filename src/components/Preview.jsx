@@ -9,18 +9,12 @@ const Preview = () => {
     const selectedPrograms = location.state?.selectedPrograms || [];
     const admissionNumber = location.state?.admissionNumber || sessionStorage.getItem("admissionNumber");
     const studentName = location.state?.studentName || sessionStorage.getItem("studentName");
-
-    // Import needed locally if top-level import is tricky with multi-edit, 
-    // but better to add top level imports in a separate block if possible or use full replace if safe.
-    // I will use full file replace logic here essentially by replacing the component body.
-    // Wait, I need to add imports. `replace_file_content` targets a block. 
-    // I'll assume I can edit the whole file or I need to add imports at top. 
-    // Let's use multi_replace for imports + component logic to be safe.
-
-    // Since I'm in `replace_file_content`, I'll replace the Confirm button handler logic primarily?
-    // Actually, I can replace the whole component function to include the async handler.
+    const [isSubmitting, setIsSubmitting] = React.useState(false); // Add Loading State
 
     const handleConfirm = async () => {
+        if (isSubmitting) return; // Prevent extra clicks
+
+        setIsSubmitting(true); // Disable button
         try {
             const { db } = await import("../firebaseConfig");
             const { collection, addDoc } = await import("firebase/firestore");
@@ -35,9 +29,6 @@ const Preview = () => {
                     name: studentName,
                     admissionNumber: admissionNumber, // stored as string usually
                     program: program,
-                    // Check if program is Onstage or Offstage? 
-                    // The UI doesn't explicitly pass this, but we can infer or just save "Individual".
-                    // The Admin logic filters by lookup anyway.
                     category: "Individual",
                     date: new Date().toLocaleDateString(),
                     time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
@@ -52,6 +43,7 @@ const Preview = () => {
         } catch (error) {
             console.error("Error adding document: ", error);
             alert(`Error submitting registration: ${error.message}`);
+            setIsSubmitting(false); // Re-enable only on error
         }
     };
 
@@ -84,15 +76,17 @@ const Preview = () => {
                         className="dashboard-btn"
                         style={{ margin: 0, flex: 1, backgroundColor: "#666" }}
                         onClick={() => navigate("/individual", { state: { selectedPrograms, admissionNumber, studentName } })}
+                        disabled={isSubmitting}
                     >
                         EDIT
                     </button>
                     <button
                         className="dashboard-btn"
-                        style={{ margin: 0, flex: 2 }}
+                        style={{ margin: 0, flex: 2, opacity: isSubmitting ? 0.7 : 1, cursor: isSubmitting ? "not-allowed" : "pointer" }}
                         onClick={handleConfirm}
+                        disabled={isSubmitting} // Disable button
                     >
-                        CONFIRM
+                        {isSubmitting ? "PROCESSING..." : "CONFIRM"}
                     </button>
                 </div>
             </div>
